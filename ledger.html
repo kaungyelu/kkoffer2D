@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ledger</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 1px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            text-align: center;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .active-time-display {
+            font-size: 24px;
+            font-weight: 600;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            min-height: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .total-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px auto;
+            max-width: 300px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .total-bets {
+            font-size: 18px;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .list-container {
+            background: white;
+            margin: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .list-header {
+            background: #f8f9fa;
+            padding: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 2px solid #667eea;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+        }
+        
+        .list-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+            align-items: center;
+        }
+        
+        .list-item:nth-child(even) {
+            background: #fafafa;
+        }
+        
+        .list-item:last-child {
+            border-bottom: none;
+        }
+        
+        .list-item .number {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .list-item .bet {
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 20px;
+            color: #e74c3c;
+            background: #ffeaea;
+            margin: 10px;
+            border-radius: 8px;
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 15px;
+            }
+            
+            .active-time-display {
+                font-size: 20px;
+            }
+            
+            .list-container {
+                margin: 10px;
+            }
+            
+            .list-header, .list-item {
+                padding: 10px;
+            }
+        }
+    </style>
+    
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="header">
+        <div id="activeTimeDisplay" class="active-time-display"></div>
+        <div id="totalBetsDisplay" class="total-info" style="display: none;">
+            <div class="total-bets">
+                <span>Total Bets:</span>
+                <span id="totalBetsAmount">0</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="list-container">
+        <div class="list-header">
+            <div>Number</div>
+            <div>Total Bets</div>
+        </div>
+        
+        <div id="ledgerList">
+            <div class="loading">Loading ledger data...</div>
+        </div>
+    </div>
+
+ <script src="su.js"></script>
+ <script src="ledger.js"></script>
+    <script src="check.js"></script>
+</body>
+</html>

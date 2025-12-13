@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalyi Login</title>
+
+<style>
+    /* CSS styles remain exactly the same */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background: radial-gradient(circle at top, #3b3bff 0%, #000018 80%);
+        overflow: hidden;
+    }
+
+    body::before, body::after {
+        content: '';
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        filter: blur(120px);
+        animation: float 12s infinite linear;
+        z-index: -1;
+    }
+
+    body::before {
+        background: #ff00ff;
+        top: -80px;
+        left: -80px;
+    }
+
+    body::after {
+        background: #00eaff;
+        bottom: -80px;
+        right: -80px;
+        animation-direction: reverse;
+    }
+
+    @keyframes float {
+        0% { transform: translate(0,0); }
+        50% { transform: translate(40px, -40px); }
+        100% { transform: translate(0,0); }
+    }
+
+    .card {
+        width: 100%;
+        max-width: 450px;
+        padding: 45px 40px;
+        border-radius: 30px;
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
+        transform: translateY(0);
+        transition: 0.35s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 60px rgba(255, 0, 255, 0.35);
+    }
+
+    .card-header {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .card-header h1 {
+        font-size: 36px;
+        font-weight: 700;
+        background: linear-gradient(90deg, #00eaff, #ff00ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .card-header p {
+        font-size: 14px;
+        color: #ccc;
+        margin-top: 5px;
+    }
+
+    .input-group {
+        margin-bottom: 30px;
+    }
+
+    .label {
+        color: #ddd;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .input-box {
+        position: relative;
+    }
+
+    .input-box input {
+        width: 100%;
+        padding: 18px 20px 18px 55px;
+        border-radius: 14px;
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+        font-size: 16px;
+        transition: 0.3s ease;
+    }
+
+    .input-box input:focus {
+        border-color: #00eaff;
+        box-shadow: 0 0 12px rgba(0, 255, 255, 0.4);
+        background: rgba(255, 255, 255, 0.12);
+        outline: none;
+    }
+
+    .icon {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px;
+        color: #00eaff;
+    }
+
+    #saveBtn {
+        width: 100%;
+        padding: 18px;
+        margin-top: 15px;
+        border: none;
+        border-radius: 14px;
+        background: linear-gradient(90deg, #00eaff, #ff00ff);
+        font-size: 17px;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+        transition: 0.3s ease;
+        box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+    }
+
+    #saveBtn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 35px rgba(255, 0, 255, 0.45);
+    }
+
+    #saveBtn:active {
+        transform: scale(0.98);
+    }
+
+    .status-indicator {
+        height: 5px;
+        border-radius: 3px;
+        margin-top: 28px;
+        background: linear-gradient(90deg, #00eaff, #ff00ff);
+        opacity: 0;
+        transition: 0.3s;
+    }
+
+    .status-indicator.active {
+        opacity: 1;
+        animation: pulseGlow 2s infinite;
+    }
+
+    .status-indicator.error {
+        background: linear-gradient(90deg, #ff0000, #ff5555);
+        opacity: 1;
+        animation: pulseGlowRed 2s infinite;
+    }
+
+    @keyframes pulseGlow {
+        0%,100% { box-shadow: 0 0 10px #00eaff; }
+        50% { box-shadow: 0 0 15px #ff00ff; }
+    }
+
+    @keyframes pulseGlowRed {
+        0%,100% { box-shadow: 0 0 10px #ff0000; }
+        50% { box-shadow: 0 0 15px #ff5555; }
+    }
+
+    .error-message {
+        color: #ff5555;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 15px;
+        min-height: 20px;
+        opacity: 0;
+        transition: 0.3s;
+    }
+
+    .error-message.show {
+        opacity: 1;
+    }
+
+</style>
+</head>
+
+<body>
+
+    <div class="card">
+        <div class="card-header">
+            <h1>KK-USER2D</h1>
+            <p>ကံကောင်းခြင်းများ ပိုင်ဆိုင်ကြပါစေ</p>
+        </div>
+
+        <div class="input-group">
+            <label class="label">Name</label>
+            <div class="input-box">
+                <div class="icon">👤</div>
+                <input type="text" id="nameInput" placeholder="Enter name">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label class="label">Password</label>
+            <div class="input-box">
+                <div class="icon">🔑</div>
+                <input type="password" id="passwordInput" placeholder="Enter password">
+            </div>
+        </div>
+
+        <button id="saveBtn">Login</button>
+
+        <div class="error-message" id="errorMessage"></div>
+        <div class="status-indicator" id="statusIndicator"></div>
+    </div>
+   <script src="su.js"></script>
+ <script src="inlog.js"></script>
+
+</body>
+</html>

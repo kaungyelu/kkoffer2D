@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalyi Login</title>
+
+<style>
+    /* အဓိကစတိုင် */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background: radial-gradient(circle at top, #3b3bff 0%, #000018 80%);
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+    }
+
+    /* နောက်ခံလှစတိုင် */
+    .bg-effect-1 {
+        position: fixed;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: #ff00ff;
+        filter: blur(100px);
+        top: -100px;
+        left: -100px;
+        opacity: 0.5;
+        animation: float1 15s infinite alternate;
+    }
+    
+    .bg-effect-2 {
+        position: fixed;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: #00eaff;
+        filter: blur(100px);
+        bottom: -100px;
+        right: -100px;
+        opacity: 0.5;
+        animation: float2 15s infinite alternate-reverse;
+    }
+    
+    @keyframes float1 {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(100px, 100px); }
+    }
+    
+    @keyframes float2 {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(-100px, -100px); }
+    }
+
+    /* ကဒ်ဒီဇိုင်း */
+    .card {
+        width: 100%;
+        max-width: 400px;
+        padding: 30px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 
+            0 0 30px rgba(0, 255, 255, 0.3),
+            0 0 60px rgba(255, 0, 255, 0.2);
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* ကဒ်အလင်းပြန်မှု */
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, 
+            transparent, 
+            rgba(255, 255, 255, 0.4), 
+            transparent);
+        z-index: 2;
+    }
+
+    /* ခေါင်းစီး */
+    .card-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .card-header h1 {
+        font-size: 32px;
+        font-weight: bold;
+        background: linear-gradient(90deg, #00eaff, #ff00ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+        text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    }
+
+    .card-header p {
+        color: #aaa;
+        font-size: 14px;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    /* အင်ပါ့အုပ်စု */
+    .input-group {
+        margin-bottom: 20px;
+    }
+
+    .input-group label {
+        display: block;
+        color: #ddd;
+        margin-bottom: 8px;
+        font-size: 14px;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    }
+
+    .input-box {
+        position: relative;
+    }
+
+    .input-box input {
+        width: 100%;
+        padding: 15px 15px 15px 45px;
+        border-radius: 10px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.3);
+        color: white;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .input-box input:focus {
+        outline: none;
+        border-color: #00eaff;
+        box-shadow: 
+            0 0 15px rgba(0, 255, 255, 0.5),
+            inset 0 0 10px rgba(0, 255, 255, 0.2);
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 18px;
+        color: #00eaff;
+        text-shadow: 0 0 10px #00eaff;
+    }
+
+    /* လော့ဂင်ခလုတ် */
+    .login-btn {
+        width: 100%;
+        padding: 15px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(90deg, #00eaff, #ff00ff);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 
+            0 0 20px rgba(0, 255, 255, 0.4),
+            0 5px 15px rgba(0, 0, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .login-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, 
+            transparent, 
+            rgba(255, 255, 255, 0.4), 
+            transparent);
+        transition: 0.5s;
+    }
+
+    .login-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 
+            0 0 30px rgba(255, 0, 255, 0.6),
+            0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    .login-btn:hover::before {
+        left: 100%;
+    }
+
+    .login-btn:active {
+        transform: translateY(0);
+    }
+
+    /* အခြေအနေပြမှု */
+    .status-line {
+        height: 3px;
+        border-radius: 2px;
+        margin-top: 20px;
+        background: linear-gradient(90deg, #00eaff, #ff00ff);
+        width: 0%;
+        transition: width 0.5s ease;
+    }
+    
+    .status-line.active {
+        animation: statusGlow 2s infinite;
+    }
+    
+    @keyframes statusGlow {
+        0%, 100% { 
+            box-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff;
+        }
+        50% { 
+            box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff;
+        }
+    }
+
+    /* အမှားပြမှု */
+    .error-msg {
+        color: #ff5555;
+        text-align: center;
+        margin-top: 10px;
+        font-size: 14px;
+        min-height: 20px;
+        text-shadow: 0 0 10px rgba(255, 85, 85, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .error-msg.show {
+        opacity: 1;
+    }
+
+    /* စာရိုက်ပြမှုအတွက် */
+    .typing-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at top, #3b3bff 0%, #000018 80%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        padding: 20px;
+    }
+    
+    .typing-box {
+        max-width: 800px;
+        text-align: center;
+        width: 90%;
+    }
+    
+    .typing-line {
+        font-size: 28px;
+        font-weight: bold;
+        margin: 25px 0;
+        min-height: 80px;
+        color: white;
+        text-shadow: 
+            0 0 15px #00eaff,
+            0 0 30px #ff00ff;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: typeIn 1s forwards;
+        line-height: 1.4;
+        padding: 10px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    @keyframes typeIn {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* စာကြောင်းအရှည်အလိုက် ကြာချိန်အတွက် */
+    .typing-line.short {
+        font-size: 24px;
+        animation-duration: 1s;
+    }
+    
+    .typing-line.medium {
+        font-size: 28px;
+        animation-duration: 1.2s;
+    }
+    
+    .typing-line.long {
+        font-size: 32px;
+        animation-duration: 1.5s;
+    }
+    
+    /* မိုဘိုင်းအတွက် */
+    @media (max-width: 768px) {
+        .typing-line {
+            font-size: 22px;
+            min-height: 60px;
+            margin: 20px 0;
+        }
+        
+        .typing-line.short {
+            font-size: 20px;
+        }
+        
+        .typing-line.medium {
+            font-size: 22px;
+        }
+        
+        .typing-line.long {
+            font-size: 24px;
+        }
+        
+        .card {
+            padding: 25px;
+            max-width: 350px;
+        }
+        
+        .card-header h1 {
+            font-size: 28px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .typing-line {
+            font-size: 18px;
+            min-height: 50px;
+            margin: 15px 0;
+        }
+        
+        .typing-line.short {
+            font-size: 16px;
+        }
+        
+        .typing-line.medium {
+            font-size: 18px;
+        }
+        
+        .typing-line.long {
+            font-size: 20px;
+        }
+        
+        .card {
+            padding: 20px;
+            max-width: 320px;
+        }
+        
+        .card-header h1 {
+            font-size: 24px;
+        }
+        
+        .card-header p {
+            font-size: 12px;
+        }
+        
+        .input-box input {
+            padding: 12px 12px 12px 40px;
+            font-size: 14px;
+        }
+        
+        .input-icon {
+            font-size: 16px;
+            left: 12px;
+        }
+        
+        .login-btn {
+            padding: 12px;
+            font-size: 15px;
+        }
+    }
+    
+    @media (max-width: 360px) {
+        .typing-line {
+            font-size: 16px;
+            min-height: 45px;
+        }
+        
+        .card {
+            padding: 15px;
+            max-width: 280px;
+        }
+        
+        .card-header h1 {
+            font-size: 22px;
+        }
+    }
+</style>
+</head>
+
+<body>
+    <!-- နောက်ခံအလှဆင် -->
+    <div class="bg-effect-1"></div>
+    <div class="bg-effect-2"></div>
+    
+    <!-- စာရိုက်ပြမှု -->
+    <div class="typing-container" id="typingContainer">
+        <div class="typing-box" id="typingBox">
+            <!-- စာကြောင်းတွေ JavaScript ကနေ ထည့်မယ် -->
+        </div>
+    </div>
+
+    <!-- လော့ဂင်ဖောင်း -->
+    <div class="card" id="loginCard" style="display: none;">
+        <div class="card-header">
+            <h1>KK-USER2D</h1>
+            <p>ကံကောင်းခြင်းများ ပိုင်ဆိုင်ကြပါစေ</p>
+        </div>
+        
+        <div class="input-group">
+            <label>Name</label>
+            <div class="input-box">
+                <div class="input-icon">👤</div>
+                <input type="text" id="nameInput" placeholder="Enter name">
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label>Password</label>
+            <div class="input-box">
+                <div class="input-icon">🔑</div>
+                <input type="password" id="passwordInput" placeholder="Enter password">
+            </div>
+        </div>
+        
+        <button class="login-btn" id="loginBtn">Login</button>
+        
+        <div class="error-msg" id="errorMsg"></div>
+        <div class="status-line" id="statusLine"></div>
+    </div>
+  <script src="su.js"></script>
+
+<script src="insub.js"></script>
+
+</body>
+</html>

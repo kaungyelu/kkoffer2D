@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 1px;
+            font-size: 11px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 8px;
+            text-align: center;
+            color: white;
+        }
+        
+        .active-time-display {
+            font-size: 13px;
+            font-weight: 600;
+            min-height: 20px;
+        }
+        
+        .container {
+            padding: 5px;
+            padding-bottom: 45px;
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 5px;
+        }
+        
+        .edittext {
+            flex: 1;
+            padding: 5px 6px;
+            border: 1px solid #667eea;
+            border-radius: 3px;
+            font-size: 11px;
+            height: 28px;
+            width: 100%;
+        }
+        
+        .button {
+            padding: 5px 6px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 60px;
+            height: 28px;
+        }
+        
+        .textview-row {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 4px;
+        }
+        
+        .textview {
+            flex: 1;
+            background: #e0e0e0;
+            padding: 5px;
+            border-radius: 3px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 11px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .single-textview {
+            background: #e0e0e0;
+            padding: 5px;
+            border-radius: 3px;
+            text-align: center;
+            font-weight: 500;
+            margin-bottom: 5px;
+            font-size: 11px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .table-container {
+            background: white;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .table-header {
+            display: grid;
+            grid-template-columns: 0.7fr 0.9fr 0.5fr 0.7fr 0.9fr;
+            background: #667eea;
+            color: white;
+            padding: 4px;
+            font-weight: 600;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            font-size: 10px;
+        }
+        
+        .table-content {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            min-height: 130px;
+        }
+        
+        .left-list {
+            border-right: 1px solid #ddd;
+            background: #f0f8ff;
+        }
+        
+        .right-list {
+            background: #fff8f0;
+        }
+        
+        .list-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            padding: 3px;
+            border-bottom: 1px solid #e0e0e0;
+            align-items: center;
+            height: 25px;
+        }
+        
+        .list-row:last-child {
+            border-bottom: none;
+        }
+        
+        .list-cell {
+            text-align: center;
+            font-size: 10px;
+            padding: 1px;
+        }
+        
+        .overlist-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 3px;
+            border-bottom: 1px solid #e0e0e0;
+            align-items: center;
+            height: 25px;
+        }
+        
+        .overlist-row:last-child {
+            border-bottom: none;
+        }
+        
+        .overlist-cell {
+            text-align: center;
+            font-size: 10px;
+            padding: 1px;
+        }
+        
+        .checkbox {
+            width: 9px;
+            height: 9px;
+            margin: 0 auto;
+            border: 1px solid #667eea;
+            border-radius: 2px;
+        }
+        
+        .totals-row {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 5px;
+        }
+        
+        .total-box {
+            flex: 1;
+            background: #e0e0e0;
+            padding: 5px;
+            border-radius: 3px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 11px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 5px;
+        }
+        
+        .additional-input {
+            margin-bottom: 5px;
+        }
+        
+        .additional-input-field {
+            width: 100%;
+            padding: 5px 6px;
+            border: 1px solid #667eea;
+            border-radius: 3px;
+            font-size: 11px;
+            height: 28px;
+        }
+        
+        .user-select-section {
+            margin-bottom: 5px;
+        }
+        
+        .user-select-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #e3f2fd;
+            padding: 4px 6px;
+            border-radius: 3px;
+            border: 1px solid #bbdefb;
+        }
+        
+        .user-label {
+            font-weight: bold;
+            color: #1976d2;
+            white-space: nowrap;
+            font-size: 11px;
+        }
+        
+        #userSelect {
+            flex: 1;
+            padding: 3px 4px;
+            border: 1px solid #667eea;
+            border-radius: 2px;
+            font-size: 11px;
+            background: white;
+            color: #2c3e50;
+            height: 24px;
+        }
+        
+        .selected-user-display {
+            background: #1976d2;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 2px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .edit-container {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 6px;
+            margin-bottom: 5px;
+        }
+        
+        .edit-inputs {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 3px;
+        }
+        
+        .editview {
+            padding: 5px 6px;
+            border: 1px solid #667eea;
+            border-radius: 3px;
+            font-size: 11px;
+            height: 28px;
+            text-align: center;
+        }
+        
+        .editview1 {
+            width: 80px;
+        }
+        
+        .editview2 {
+            flex: 1;
+        }
+        
+        .function-keys {
+            display: flex;
+            gap: 3px;
+            position: fixed;
+            bottom: 5px;
+            left: 5px;
+            right: 5px;
+        }
+        
+        .f-key {
+            flex: 1;
+            padding: 6px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            height: 32px;
+            min-width: 0;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding-bottom: 42px;
+            }
+            
+            .table-header {
+                font-size: 9px;
+                padding: 3px;
+            }
+            
+            .list-cell, .overlist-cell {
+                font-size: 9px;
+            }
+            
+            .function-keys {
+                bottom: 3px;
+                left: 3px;
+                right: 3px;
+            }
+        }
+    </style>
+    
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="header">
+        <div id="activeTimeDisplay" class="active-time-display"></div>
+    </div>
+    
+    <div class="container">
+        <div class="input-row">
+            <input type="number" class="edittext" id="mainEditText" placeholder="Enter amount">
+            <button class="button" id="mainSaveBtn">Save</button>
+        </div>
+        
+        <div class="textview-row">
+            <div class="textview" id="textView1">TextView1: 0</div>
+            <div class="textview" id="textView2">TextView2: 0</div>
+        </div>
+        
+        <div class="single-textview" id="singleTextView">
+            Total Bets: 0
+        </div>
+        
+        <div class="table-container">
+            <div class="table-header">
+                <div>No</div>
+                <div>Price</div>
+                <div>D</div>
+                <div>No</div>
+                <div>Over</div>
+            </div>
+            
+            <div class="table-content">
+                <div class="left-list" id="listView1">
+                    <!-- Will be filled dynamically -->
+                </div>
+                
+                <div class="right-list" id="listView2">
+                    <!-- Will be filled dynamically -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="totals-row">
+            <div class="total-box" id="totalBox">
+                Total: 0
+            </div>
+            <div class="total-box" id="overTotalBox">
+                OverTotal: 0
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="button" id="clearBtn" style="flex: 1;">Clear</button>
+            <button class="button" id="saveBtn" style="flex: 1;">Save</button>
+        </div>
+        
+        <div class="user-select-section">
+            <div class="user-select-container">
+                <div class="user-label">Name:</div>
+                <select id="userSelect">
+                    <option value="">Loading users...</option>
+                </select>
+                <div id="selectedUserDisplay" class="selected-user-display"></div>
+            </div>
+        </div>
+        
+        <div class="edit-container">
+            <div class="edit-inputs">
+                <input type="number" class="editview editview1" id="editView1" maxlength="2" placeholder="No">
+                <input type="number" class="editview editview2" id="editView2" placeholder="Amount">
+            </div>
+            <button class="button" id="editSaveBtn" style="width: 100%;">Save</button>
+        </div>
+        
+        <div class="function-keys">
+            <button class="f-key" id="f1Btn">F1</button>
+            <button class="f-key" id="f2Btn">F2</button>
+            <button class="f-key" id="f3Btn">F3</button>
+        </div>
+    </div>
+ <script src="su.js"></script>
+  <script src="buy.js"></script>
+    <script src="check.js"></script>
+</body>
+</html>

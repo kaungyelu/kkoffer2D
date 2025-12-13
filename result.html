@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
+        }
+        
+        body {
+            padding: 10px;
+            background-color: #f5f5f5;
+            max-width: 500px;
+            margin: 0 auto;
+            font-size: 14px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 22px;
+            padding-top: 5px;
+        }
+        
+        #activeTimeDisplay {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        #listView {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+        
+        .list-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            position: relative;
+        }
+        
+        .list-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .item-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        
+        .item-details {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .item-date {
+            font-weight: bold;
+            color: #2c3e50;
+            min-width: 100px;
+        }
+        
+        .item-time {
+            color: #666;
+            margin: 0 10px;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .item-pno {
+            color: #2196F3;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 4px;
+            background-color: #f0f8ff;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .item-pno:hover {
+            background-color: #e3f2fd;
+        }
+        
+        .pno-edit-input {
+            padding: 5px 10px;
+            border: 2px solid #2196F3;
+            border-radius: 4px;
+            font-size: 14px;
+            width: 80px;
+            text-align: center;
+            font-weight: bold;
+            color: #2196F3;
+            font-family: 'Pyidaungsu', sans-serif;
+        }
+        
+        .pno-edit-input:focus {
+            outline: none;
+            border-color: #0b7dda;
+        }
+        
+        .empty-message {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+            font-style: italic;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+        
+        .loading::after {
+            content: "...";
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: "."; }
+            40% { content: ".."; }
+            60%, 100% { content: "..."; }
+        }
+        
+        #resultBtn {
+            width: 100%;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        #resultBtn:hover {
+            background-color: #45a049;
+        }
+        
+        /* Result Display Styles */
+        #resultDisplay {
+            background-color: white;
+            border-radius: 8px;
+            padding: 0;
+            margin-top: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .result-header {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            padding: 12px;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 0;
+        }
+        
+        .user-result {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+            margin: 12px;
+        }
+        
+        .user-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            text-align: center;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .calculation-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 15px;
+        }
+        
+        .calculation-label {
+            color: #555;
+        }
+        
+        .calculation-value {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .divider {
+            border-bottom: 1px solid #ddd;
+            margin: 8px 0;
+        }
+        
+        .sub-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-weight: bold;
+            color: #2c3e50;
+            border-top: 1px solid #ddd;
+            margin-top: 8px;
+        }
+        
+        .pno-section {
+            background-color: #fff3e0;
+            padding: 8px;
+            border-radius: 4px;
+            margin: 8px 0;
+            border: 1px solid #ffcc80;
+        }
+        
+        .pno-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            color: #e65100;
+            font-weight: bold;
+        }
+        
+        .final-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-weight: bold;
+            font-size: 16px;
+            color: white;
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            border-radius: 6px;
+            margin-top: 10px;
+            padding: 12px;
+        }
+        
+        .loss {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%) !important;
+        }
+        
+        .profit-loss-indicator {
+            text-align: center;
+            font-weight: bold;
+            padding: 6px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+        
+        .profit {
+            color: #27ae60;
+            background-color: #d5f4e6;
+            border: 1px solid #2ecc71;
+        }
+        
+        .loss-indicator {
+            color: #e74c3c;
+            background-color: #ffeaea;
+            border: 1px solid #e74c3c;
+        }
+        
+        .no-sales-message {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+            font-style: italic;
+        }
+        
+        .error-message {
+            text-align: center;
+            padding: 10px;
+            background-color: #ffeaea;
+            color: #e74c3c;
+            border-radius: 5px;
+            margin: 10px;
+        }
+        
+        .success-message {
+            text-align: center;
+            padding: 10px;
+            background-color: #eaffea;
+            color: #27ae60;
+            border-radius: 5px;
+            margin: 10px;
+        }
+        
+        /* Grand Total Section */
+        .grand-total-section {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 0 0 8px 8px;
+            margin-top: 15px;
+        }
+        
+        .grand-total-header {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #ecf0f1;
+        }
+        
+        .grand-total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .grand-total-row:last-child {
+            border-bottom: none;
+        }
+        
+        .grand-total-label {
+            color: #ecf0f1;
+        }
+        
+        .grand-total-value {
+            font-weight: bold;
+        }
+        
+        .grand-total-final {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 8px;
+            border-top: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        .grand-profit {
+            color: #2ecc71;
+        }
+        
+        .grand-loss {
+            color: #e74c3c;
+        }
+        
+        /* Status indicator */
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .profit-status {
+            background-color: #2ecc71;
+        }
+        
+        .loss-status {
+            background-color: #e74c3c;
+        }
+        
+        .neutral-status {
+            background-color: #95a5a6;
+        }
+    </style>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Result</h1>
+    
+    <div id="activeTimeDisplay">
+        <div class="loading">Loading active time...</div>
+    </div>
+    
+    <div id="listView">
+        <div class="loading">Loading times...</div>
+    </div>
+    
+    <button id="resultBtn">Result</button>
+    
+    <div id="resultDisplay">
+        <!-- Result will be displayed here -->
+    </div>
+     <script src="su.js"></script>
+
+ <script src="result.js"></script>
+    <script src="check.js"></script>
+</body>
+</html>

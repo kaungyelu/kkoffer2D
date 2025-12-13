@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1px;
+        }
+        
+        .control-panel {
+            width: 100%;
+            max-width: 450px;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            min-height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .selected-time {
+            font-size: 24px;
+            font-weight: 600;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .button-grid {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .control-button {
+            background: white;
+            border: none;
+            border-radius: 15px;
+            padding: 25px 15px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 5px 15px rgba(0, 0, 0, 0.08),
+                0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .control-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 30px rgba(0, 0, 0, 0.15),
+                0 5px 10px rgba(0, 0, 0, 0.12);
+        }
+        
+        .control-button:active {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.12),
+                0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .control-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.4),
+                transparent
+            );
+            transition: left 0.7s;
+        }
+        
+        .control-button:hover::before {
+            left: 100%;
+        }
+        
+        .button-icon {
+            display: block;
+            font-size: 36px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        
+        .status-bar {
+            background: #f8f9fa;
+            border-top: 1px solid #eaeaea;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #52c41a;
+            animation: pulse 2s infinite;
+        }
+        
+        .version {
+            font-weight: 500;
+            color: #667eea;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(82, 196, 26, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(82, 196, 26, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(82, 196, 26, 0);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .control-panel {
+                max-width: 95%;
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .selected-time {
+                font-size: 20px;
+            }
+            
+            .button-grid {
+                padding: 20px;
+                gap: 15px;
+            }
+            
+            .control-button {
+                padding: 20px 10px;
+                font-size: 16px;
+            }
+            
+            .button-icon {
+                font-size: 30px;
+                margin-bottom: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="control-panel">
+        <div class="header">
+            <h1 id="headerTitle">Active Time</h1>
+        </div>
+        
+        <div class="button-grid">
+            <button id="saleButton" class="control-button">
+                <span class="button-icon">🛒</span>
+                Sale
+            </button>
+            
+            <button id="slipButton" class="control-button">
+                <span class="button-icon">🧾</span>
+                Slip
+            </button>
+            
+            <button id="buyButton" class="control-button">
+                <span class="button-icon">💰</span>
+                Buy
+            </button>
+            
+            <button id="ledgerButton" class="control-button">
+                <span class="button-icon">📒</span>
+                Ledger
+            </button>
+            
+            <button id="nameButton" class="control-button">
+                <span class="button-icon">👤</span>
+                Name
+            </button>
+            
+            <button id="resultButton" class="control-button">
+                <span class="button-icon">📊</span>
+                Result
+            </button>
+            
+            <button id="timeButton" class="control-button">
+                <span class="button-icon">⏰</span>
+                Week
+            </button>
+            
+            <button id="setButton" class="control-button">
+                <span class="button-icon">⚙️</span>
+                Set
+            </button>
+        </div>
+        
+        <div class="status-bar">
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span>System Ready</span>
+            </div>
+            <div class="version">v1.0.0</div>
+        </div>
+    </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

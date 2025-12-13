@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .list-section {
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+        
+        .input-section {
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .input-row {
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        
+        input {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            width: 100%;
+            font-size: 16px;
+        }
+        
+        button {
+            padding: 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        
+        button:hover {
+            background: #45a049;
+        }
+        
+        .list-header, .list-row {
+            display: flex;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .list-header {
+            background: #e9e9e9;
+            font-weight: bold;
+        }
+        
+        .list-row:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .col-name {
+            flex: 1;
+            min-width: 100px;
+            padding-right: 5px;
+        }
+        
+        .col-course {
+            width: 80px;
+            text-align: center;
+            padding-right: 5px;
+        }
+        
+        .col-level {
+            width: 80px;
+            text-align: center;
+            padding-right: 5px;
+        }
+        
+        .col-actions {
+            width: 120px;
+            text-align: center;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .edit-btn, .delete-btn {
+            padding: 5px 10px;
+            font-size: 14px;
+            width: auto;
+            border-radius: 3px;
+        }
+        
+        .edit-btn {
+            background: #2196F3;
+        }
+        
+        .delete-btn {
+            background: #f44336;
+        }
+        
+        .message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 3px;
+            display: none;
+        }
+        
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+        
+        .success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+
+        @media (max-width: 480px) {
+            .col-course, .col-level {
+                width: 60px;
+                font-size: 14px;
+            }
+            
+            .col-actions {
+                width: 100px;
+            }
+            
+            .edit-btn, .delete-btn {
+                padding: 4px 8px;
+                font-size: 13px;
+            }
+            
+            input, button {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .col-course, .col-level {
+                width: 50px;
+                font-size: 13px;
+            }
+            
+            .col-actions {
+                width: 90px;
+            }
+            
+            .edit-btn, .delete-btn {
+                padding: 3px 6px;
+                font-size: 12px;
+            }
+        }
+    </style>
+    
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="list-section">
+            <div class="list-header">
+                <div class="col-name">အမည်</div>
+                <div class="col-course">ကော်</div>
+                <div class="col-level">အဆ</div>
+                <div class="col-actions">Action</div>
+            </div>
+            <div id="listView">
+                <div style="padding: 20px; text-align: center; color: #666;">Loading...</div>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <div class="input-row">
+                <input type="text" id="name" placeholder="အမည်">
+            </div>
+            <div class="input-row">
+                <input type="number" id="com" placeholder="ကော်">
+            </div>
+            <div class="input-row">
+                <input type="number" id="za" placeholder="အဆ">
+            </div>
+            <div class="input-row">
+                <button id="addBtn">ရေးထည့်မည်</button>
+            </div>
+            <div id="message" class="message"></div>
+        </div>
+    </div>
+     <script src="su.js"></script>
+ <script src="name.js"></script>
+    <script src="check.js"></script>
+
+</body>
+</html>
