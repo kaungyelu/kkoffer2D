@@ -1,7 +1,6 @@
     
         
-        // Initialize Supabase client
-        let supabase;
+        
         let editingId = null;
         let originalName = '';
         
