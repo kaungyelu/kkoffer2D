@@ -1,6 +1,4 @@
   
-    // Global variables
-    let supabase;
     let currentKey = '';
     let ledgerData = {}; // { "12": 1500, "21": 500, "34": 1000 }
     let overBets = []; // Array of { number: "12", amount: 500 }
