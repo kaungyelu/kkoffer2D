@@ -1,7 +1,7 @@
 
     
         
-        let supabase;
+        
         let listView;
         let activeTimeDisplay;
         let resultBtn;
