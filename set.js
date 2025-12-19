@@ -1,5 +1,4 @@
-           // Initialize Supabase client
-        let supabase;
+           
         
         // DOM elements
         let addTimeBtn, inputBox, dateInput, timeInput, saveBtn, listView, errorMessage, successMessage;
