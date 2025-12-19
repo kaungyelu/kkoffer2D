@@ -1,7 +1,6 @@
     
         
-        // Global variables
-        let supabase;
+        
         let currentKey = '';
         let ledgerData = {}; // Store bets by number: { "00": 400, "12": 3500, ... }
         
