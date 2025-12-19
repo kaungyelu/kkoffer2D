@@ -1,5 +1,5 @@
    
-        let supabase;
+        
         let listView;
         let viewBtn;
         let selectAllCheckbox;
