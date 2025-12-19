@@ -11,7 +11,7 @@
         // Global variables
         let currentKey = '';
         let currentData = [];
-        let supabase;
+        
         let currentEditingSlipId = null;
         let pressTimer = null;
         const LONG_PRESS_DURATION = 800; // milliseconds
