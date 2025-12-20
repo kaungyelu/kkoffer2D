@@ -1,7 +1,4 @@
-    
-        
-        
-        let editingId = null;
+    let editingId = null;
         let originalName = '';
         
         // Initialize when page loads
@@ -30,12 +27,12 @@
                 if (error) throw error;
                 
                 if (!data || data.length === 0) {
-                    // Create Admin record
                     const { error: insertError } = await supabase
                         .from('Name')
                         .insert([
                             {
                                 name: 'Admin',
+                                password: 'admin123',
                                 com: 15,
                                 za: 80
                             }
@@ -77,18 +74,34 @@
             }, 3000);
         }
         
+        // Toggle password visibility
+        function togglePasswordVisibility(button, id) {
+            const passwordCell = document.getElementById('password-value-' + id);
+            const password = button.getAttribute('data-password');
+            
+            if (passwordCell.textContent === '••••••') {
+                passwordCell.textContent = password || '(none)';
+                button.textContent = 'Hide';
+            } else {
+                passwordCell.textContent = '••••••';
+                button.textContent = 'Show';
+            }
+        }
+        
         // Add or Update item
         async function saveItem() {
             const nameInput = document.getElementById('name');
+            const passwordInput = document.getElementById('password');
             const comInput = document.getElementById('com');
             const zaInput = document.getElementById('za');
             
             const name = nameInput.value.trim();
+            const password = passwordInput.value.trim();
             const com = comInput.value.trim();
             const za = zaInput.value.trim();
             
             if (!name || !com || !za) {
-                showMessage('အားလုံးဖြည့်ရန်', true);
+                showMessage('အမည်၊ ကော်နှင့်အဆ ဖြည့်ရန်', true);
                 return;
             }
             
@@ -101,8 +114,9 @@
             }
             
             try {
+                const passwordToSave = password === '' ? null : password;
+                
                 if (editingId) {
-                    // Check if name changed and already exists
                     if (name !== originalName) {
                         const { data: existing } = await supabase
                             .from('Name')
@@ -117,14 +131,19 @@
                         }
                     }
                     
-                    // Update existing record
+                    const updateData = {
+                        name: name,
+                        com: comNum,
+                        za: zaNum
+                    };
+                    
+                    if (passwordToSave !== null) {
+                        updateData.password = passwordToSave;
+                    }
+                    
                     const { error } = await supabase
                         .from('Name')
-                        .update({
-                            name: name,
-                            com: comNum,
-                            za: zaNum
-                        })
+                        .update(updateData)
                         .eq('id', editingId);
                     
                     if (error) throw error;
@@ -134,7 +153,6 @@
                     document.getElementById('addBtn').textContent = 'ရေးထည့်မည်';
                     showMessage('ပြင်ဆင်ပြီး');
                 } else {
-                    // Check if name already exists
                     const { data: existing } = await supabase
                         .from('Name')
                         .select('*')
@@ -146,24 +164,27 @@
                         return;
                     }
                     
-                    // Insert new record
+                    const insertData = {
+                        name: name,
+                        com: comNum,
+                        za: zaNum
+                    };
+                    
+                    if (passwordToSave !== null) {
+                        insertData.password = passwordToSave;
+                    }
+                    
                     const { error } = await supabase
                         .from('Name')
-                        .insert([
-                            {
-                                name: name,
-                                com: comNum,
-                                za: zaNum
-                            }
-                        ]);
+                        .insert([insertData]);
                     
                     if (error) throw error;
                     
                     showMessage('ထည့်သွင်းပြီး');
                 }
                 
-                // Clear form and reload data
                 nameInput.value = '';
+                passwordInput.value = '';
                 comInput.value = '';
                 zaInput.value = '';
                 nameInput.focus();
@@ -177,29 +198,30 @@
         }
         
         // Edit item
-        function editItem(id) {
-            // Load current data to find the item
-            supabase
-                .from('Name')
-                .select('*')
-                .eq('id', id)
-                .single()
-                .then(({ data, error }) => {
-                    if (error) throw error;
-                    
-                    if (data) {
-                        document.getElementById('name').value = data.name;
-                        document.getElementById('com').value = data.com;
-                        document.getElementById('za').value = data.za;
-                        editingId = id;
-                        originalName = data.name;
-                        document.getElementById('addBtn').textContent = 'ပြင်ဆင်မည်';
-                        document.getElementById('name').focus();
-                    }
-                })
-                .catch(error => {
-                    console.error('Error loading item for edit:', error);
-                });
+        async function editItem(id) {
+            try {
+                const { data, error } = await supabase
+                    .from('Name')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
+                
+                if (error) throw error;
+                
+                if (data) {
+                    document.getElementById('name').value = data.name;
+                    document.getElementById('password').value = data.password || '';
+                    document.getElementById('com').value = data.com;
+                    document.getElementById('za').value = data.za;
+                    editingId = id;
+                    originalName = data.name;
+                    document.getElementById('addBtn').textContent = 'ပြင်ဆင်မည်';
+                    document.getElementById('name').focus();
+                }
+            } catch (error) {
+                console.error('Error loading item for edit:', error);
+                showMessage('တည်းဖြတ်ရာတွင် အမှားဖြစ်နေ', true);
+            }
         }
         
         // Delete item
@@ -221,12 +243,12 @@
                 
                 if (error) throw error;
                 
-                // If we were editing this item, clear the form
                 if (editingId === id) {
                     editingId = null;
                     originalName = '';
                     document.getElementById('addBtn').textContent = 'ရေးထည့်မည်';
                     document.getElementById('name').value = '';
+                    document.getElementById('password').value = '';
                     document.getElementById('com').value = '';
                     document.getElementById('za').value = '';
                 }
@@ -256,9 +278,18 @@
                 row.className = 'list-row';
                 
                 const deleteDisabled = item.name === 'Admin' ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : '';
+                const password = item.password || '';
+                const displayPassword = password === '' ? '(none)' : '••••••';
+                const toggleButton = password !== '' ? 
+                    `<button class="password-toggle" onclick="togglePasswordVisibility(this, '${item.id}')" data-password="${password}">Show</button>` : 
+                    '';
                 
                 row.innerHTML = `
                     <div class="col-name">${item.name}</div>
+                    <div class="col-password">
+                        <span class="password-value" id="password-value-${item.id}">${displayPassword}</span>
+                        ${toggleButton}
+                    </div>
                     <div class="col-course">${item.com}</div>
                     <div class="col-level">${item.za}</div>
                     <div class="col-actions">
@@ -278,6 +309,10 @@
             document.getElementById('addBtn').addEventListener('click', saveItem);
             
             document.getElementById('name').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') document.getElementById('password').focus();
+            });
+            
+            document.getElementById('password').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') document.getElementById('com').focus();
             });
             
@@ -290,23 +325,21 @@
             });
         }
         
-        // Make functions available globally for onclick events
+        // Make functions available globally
         window.editItem = editItem;
         window.deleteItem = deleteItem;
+        window.togglePasswordVisibility = togglePasswordVisibility;
         
         // Set up real-time updates
         setTimeout(() => {
-            if (supabase) {
-                supabase
-                    .channel('names-channel')
-                    .on('postgres_changes', 
-                        { event: '*', schema: 'public', table: 'Name' },
-                        () => {
-                            console.log('Names updated, reloading...');
-                            loadData();
-                        }
-                    )
-                    .subscribe();
-            }
+            supabase
+                .channel('names-channel')
+                .on('postgres_changes', 
+                    { event: '*', schema: 'public', table: 'Name' },
+                    () => {
+                        console.log('Names updated, reloading...');
+                        loadData();
+                    }
+                )
+                .subscribe();
         }, 1000);
-    
