@@ -81,38 +81,61 @@
         }
         
         .col-name {
-            flex: 1;
-            min-width: 100px;
-            padding-right: 5px;
+            flex: 2;
+            min-width: 120px;
+            padding-right: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .col-password {
+            flex: 2;
+            min-width: 120px;
+            padding-right: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         .col-course {
-            width: 80px;
+            flex: 1;
+            min-width: 70px;
             text-align: center;
-            padding-right: 5px;
+            padding-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .col-level {
-            width: 80px;
+            flex: 1;
+            min-width: 70px;
             text-align: center;
-            padding-right: 5px;
+            padding-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .col-actions {
-            width: 120px;
-            text-align: center;
+            flex: 1.5;
+            min-width: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .actions {
             display: flex;
-            gap: 5px;
+            gap: 8px;
         }
         
         .edit-btn, .delete-btn {
-            padding: 5px 10px;
+            padding: 6px 12px;
             font-size: 14px;
             width: auto;
             border-radius: 3px;
+            white-space: nowrap;
         }
         
         .edit-btn {
@@ -123,11 +146,33 @@
             background: #f44336;
         }
         
+        .password-toggle {
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            color: #333;
+            cursor: pointer;
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 3px;
+            min-width: 50px;
+            text-align: center;
+        }
+        
+        .password-toggle:hover {
+            background: #e0e0e0;
+        }
+        
+        .password-value {
+            flex: 1;
+            min-width: 50px;
+        }
+        
         .message {
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
             border-radius: 3px;
             display: none;
+            text-align: center;
         }
         
         .error {
@@ -142,39 +187,79 @@
             border: 1px solid #c8e6c9;
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 600px) {
+            .col-name {
+                flex: 2;
+                min-width: 100px;
+                font-size: 14px;
+            }
+            
+            .col-password {
+                flex: 2;
+                min-width: 100px;
+                font-size: 14px;
+            }
+            
             .col-course, .col-level {
-                width: 60px;
+                flex: 1;
+                min-width: 50px;
                 font-size: 14px;
             }
             
             .col-actions {
-                width: 100px;
+                flex: 1.5;
+                min-width: 100px;
             }
             
             .edit-btn, .delete-btn {
-                padding: 4px 8px;
+                padding: 5px 8px;
                 font-size: 13px;
             }
             
-            input, button {
-                padding: 10px;
+            .password-toggle {
+                font-size: 11px;
+                padding: 2px 6px;
+                min-width: 45px;
             }
         }
 
-        @media (max-width: 360px) {
+        @media (max-width: 400px) {
+            .col-name {
+                flex: 2;
+                min-width: 80px;
+                font-size: 13px;
+            }
+            
+            .col-password {
+                flex: 2;
+                min-width: 80px;
+                font-size: 13px;
+            }
+            
             .col-course, .col-level {
-                width: 50px;
+                flex: 1;
+                min-width: 40px;
                 font-size: 13px;
             }
             
             .col-actions {
-                width: 90px;
+                flex: 1.5;
+                min-width: 90px;
             }
             
             .edit-btn, .delete-btn {
-                padding: 3px 6px;
+                padding: 4px 6px;
                 font-size: 12px;
+            }
+            
+            .password-toggle {
+                font-size: 10px;
+                padding: 2px 4px;
+                min-width: 40px;
+            }
+            
+            .list-header, .list-row {
+                padding: 8px 5px;
             }
         }
     </style>
@@ -187,6 +272,7 @@
         <div class="list-section">
             <div class="list-header">
                 <div class="col-name">အမည်</div>
+                <div class="col-password">Password</div>
                 <div class="col-course">ကော်</div>
                 <div class="col-level">အဆ</div>
                 <div class="col-actions">Action</div>
@@ -201,6 +287,9 @@
                 <input type="text" id="name" placeholder="အမည်">
             </div>
             <div class="input-row">
+                <input type="password" id="password" placeholder="Password (Optional)">
+            </div>
+            <div class="input-row">
                 <input type="number" id="com" placeholder="ကော်">
             </div>
             <div class="input-row">
@@ -212,9 +301,12 @@
             <div id="message" class="message"></div>
         </div>
     </div>
+    
      <script src="su.js"></script>
+     
  <script src="name.js"></script>
-    <script src="check.js"></script>
+     <script src="check.js"></script>
+    
 
 </body>
 </html>
