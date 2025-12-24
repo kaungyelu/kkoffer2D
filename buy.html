@@ -407,11 +407,12 @@
         
         <div class="edit-container">
             <div class="edit-inputs">
-                <input type="number" class="editview editview1" id="editView1" maxlength="2" placeholder="No">
+             <input type="number" class="editview editview1" id="editView1"   min="0" max="99" oninput="this.value=this.value.slice(0,2)" placeholder="No">
                 <input type="number" class="editview editview2" id="editView2" placeholder="Amount">
             </div>
             <button class="button" id="editSaveBtn" style="width: 100%;">Save</button>
         </div>
+        
         
         <div class="function-keys">
             <button class="f-key" id="f1Btn">F1</button>
