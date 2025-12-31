@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2D Betting System</title>
     <style>
-        /* All previous CSS styles remain the same */
         * {
             margin: 0;
             padding: 0;
@@ -27,22 +26,20 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         header {
             background: #2c3e50;
             color: white;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             border-bottom: 3px solid #3498db;
             position: sticky;
             top: 0;
             z-index: 100;
-        }
-
-        h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
         }
 
         .subtitle {
@@ -52,7 +49,7 @@
         }
 
         #activeTimeDisplay {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             color: #3498db;
             margin-top: 5px;
@@ -63,7 +60,7 @@
         }
 
         .user-select-section {
-            padding: 10px 15px;
+            padding: 10px;
             background: #f8f9fa;
             border-bottom: 1px solid #e9ecef;
         }
@@ -71,18 +68,19 @@
         .user-select-container {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .user-label {
             font-weight: bold;
             color: #2c3e50;
             white-space: nowrap;
+            font-size: 14px;
         }
 
         #userSelect {
             flex: 1;
-            padding: 8px 12px;
+            padding: 8px;
             border: 2px solid #3498db;
             border-radius: 6px;
             font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
@@ -102,35 +100,37 @@
 
         .list-header {
             background: white;
-            padding: 15px;
+            padding: 10px;
             border-bottom: 1px solid #eee;
             position: sticky;
-            top: 140px;
+            top: 110px;
             z-index: 90;
         }
 
         .list-header h3 {
             color: #2c3e50;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             padding-bottom: 5px;
             border-bottom: 2px solid #3498db;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 16px;
         }
 
         .column-headers {
             display: flex;
             justify-content: space-between;
             background: #f8f9fa;
-            padding: 8px 10px;
+            padding: 6px 8px;
             border-radius: 6px;
             font-weight: bold;
             color: #2c3e50;
             border: 1px solid #e9ecef;
             position: sticky;
-            top: 220px;
+            top: 170px;
             z-index: 80;
+            font-size: 12px;
         }
 
         .column-number { width: 25%; text-align: center; }
@@ -139,32 +139,27 @@
         .column-action { width: 15%; text-align: center; }
 
         .list-view {
-            padding: 0 15px;
-            max-height: 250px;
+            padding: 0 10px;
+            height: 150px;
             overflow-y: auto;
+            flex-shrink: 0;
         }
 
         .bet-list {
-            min-height: 100px;
+            min-height: 50px;
         }
 
         .bet-item {
             background: #f8f9fa;
-            margin: 6px 0;
-            padding: 10px;
-            border-radius: 8px;
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 6px;
             border-left: 4px solid #3498db;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.3s;
             border: 1px solid #e9ecef;
-        }
-
-        .bet-item:hover {
-            transform: translateX(3px);
-            background: #e9ecef;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 13px;
         }
 
         .bet-number {
@@ -172,7 +167,6 @@
             text-align: center;
             font-weight: bold;
             color: #2c3e50;
-            font-size: 16px;
         }
 
         .bet-amount {
@@ -180,17 +174,16 @@
             text-align: center;
             color: #e74c3c;
             font-weight: bold;
-            font-size: 15px;
         }
 
         .bet-type {
             width: 25%;
             text-align: center;
             color: #3498db;
-            font-size: 13px;
+            font-size: 12px;
             background: #e3f2fd;
-            padding: 4px 8px;
-            border-radius: 12px;
+            padding: 3px 6px;
+            border-radius: 10px;
         }
 
         .delete-btn {
@@ -198,20 +191,14 @@
             background: #e74c3c;
             color: white;
             border: none;
-            border-radius: 6px;
-            padding: 6px;
+            border-radius: 4px;
+            padding: 4px;
             cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s;
-        }
-
-        .delete-btn:hover {
-            background: #c0392b;
-            transform: scale(1.05);
+            font-size: 11px;
         }
 
         .text-view {
-            padding: 12px 15px;
+            padding: 10px;
             background: #34495e;
             color: white;
             display: flex;
@@ -220,30 +207,25 @@
             position: sticky;
             bottom: 60px;
             z-index: 100;
+            flex-shrink: 0;
         }
 
         .total-amount {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: #2ecc71;
             flex: 1;
             text-align: center;
         }
 
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
         .action-btn {
-            padding: 8px 15px;
+            padding: 6px 12px;
             border: none;
             border-radius: 6px;
             font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s;
         }
 
         .clear-btn {
@@ -251,19 +233,9 @@
             color: white;
         }
 
-        .clear-btn:hover {
-            background: #c0392b;
-            transform: translateY(-2px);
-        }
-
         .save-btn {
             background: #3498db;
             color: white;
-        }
-
-        .save-btn:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
         }
 
         .slip-count-view {
@@ -271,60 +243,48 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 15px;
-            border-top: 1px solid #3498db;
+            padding: 8px 10px;
             position: sticky;
             bottom: 0;
             z-index: 100;
+            flex-shrink: 0;
         }
 
         .slip-count-label {
             color: #ecf0f1;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
         }
 
         .slipnumber {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: #f1c40f;
             background: rgba(0, 0, 0, 0.2);
-            padding: 5px 15px;
-            border-radius: 20px;
-            min-width: 60px;
+            padding: 4px 12px;
+            border-radius: 15px;
+            min-width: 50px;
             text-align: center;
         }
 
         .edit-view {
-            padding: 20px;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
-            font-size: 16px;
-            resize: vertical;
-            min-height: 120px;
-            margin-bottom: 15px;
-            transition: border 0.3s;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        button {
+            padding: 15px;
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .cpt-container {
+            margin-bottom: 10px;
+            flex-shrink: 0;
+            display: flex;
+            gap: 5px;
+        }
+
+        .cpt-btn, .unit-cpt-btn {
+            background: #3498db;
+            color: white;
             padding: 12px;
             border: none;
             border-radius: 8px;
@@ -332,7 +292,169 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .unit-cpt-btn {
+            background: #2ecc71;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+            flex-shrink: 0;
+            width: 100%;
+        }
+
+        .text-display {
+            flex: 1;
+            padding: 8px 4px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
+            font-size: 13px;
+            text-align: center;
+            min-width: 0;
+            box-sizing: border-box;
+            background: #f8f9fa;
+            color: #2c3e50;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .buttons-scroll-container {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 5px;
+            flex: 1;
+            overflow-y: auto;
+            min-height: 150px;
+            max-height: 230px;
+            display: none;
+        }
+
+        .unit-buttons-scroll-container {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 5px;
+            flex: 1;
+            overflow-y: auto;
+            min-height: 150px;
+            max-height: 230px;
+            display: none;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+
+        .unit-button-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+
+        .num-btn {
+            padding: 12px 3px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            background: white;
+            color: #2c3e50;
+            font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .unit-num-btn {
+            padding: 12px 3px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            background: white;
+            color: #2c3e50;
+            font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .special-btn {
+            background: #e74c3c;
+            color: white;
+            border-color: #c0392b;
+        }
+
+        .unit-special-btn {
+            background: #e74c3c;
+            color: white;
+            border-color: #c0392b;
+        }
+
+        .action-special-btn {
+            background: #2ecc71;
+            color: white;
+            border-color: #27ae60;
+            grid-row: span 2;
+            min-height: 96px;
+        }
+
+        .unit-action-special-btn {
+            background: #2ecc71;
+            color: white;
+            border-color: #27ae60;
+            grid-row: span 2;
+            min-height: 96px;
+        }
+
+        .original-edit-area {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 10px;
+            flex: 1;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .button-group button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
         .a1-btn {
@@ -340,19 +462,9 @@
             color: white;
         }
 
-        .a1-btn:hover {
-            background: #7f8c8d;
-            transform: translateY(-2px);
-        }
-
         .a2-btn {
             background: #95a5a6;
             color: white;
-        }
-
-        .a2-btn:hover {
-            background: #7f8c8d;
-            transform: translateY(-2px);
         }
 
         .a3-btn {
@@ -360,45 +472,19 @@
             color: white;
         }
 
-        .a3-btn:hover {
-            background: #27ae60;
-            transform: translateY(-2px);
-        }
-        
         .a4-btn {
             background: #2ecc71;
             color: white;
         }
 
-        .a4-btn:hover {
-            background: #27ae60;
-            transform: translateY(-2px);
-        }
-
         .empty-message {
             text-align: center;
             color: #7f8c8d;
-            padding: 30px 20px;
+            padding: 20px;
             font-style: italic;
             background: #f8f9fa;
             border-radius: 8px;
             margin: 10px 0;
-        }
-
-        .example-text {
-            font-size: 12px;
-            color: #7f8c8d;
-            margin-top: 5px;
-        }
-
-        .special-bet {
-            border-left-color: #e74c3c;
-        }
-
-        .closed-number {
-            opacity: 0.5;
-            text-decoration: line-through;
-            border-left-color: #95a5a6;
         }
 
         .list-count {
@@ -409,51 +495,123 @@
             font-size: 12px;
         }
 
+        .additional-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .unit-additional-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .additional-btn {
+            padding: 10px 3px;
+            border: 2px solid #9b59b6;
+            border-radius: 8px;
+            background: white;
+            color: #2c3e50;
+            font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .unit-additional-btn {
+            padding: 10px 3px;
+            border: 2px solid #9b59b6;
+            border-radius: 8px;
+            background: white;
+            color: #2c3e50;
+            font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         @media (max-width: 480px) {
             .container {
                 border-radius: 10px;
             }
             
             header {
-                padding: 15px;
+                padding: 12px;
             }
             
-            h1 {
-                font-size: 20px;
+            .text-display {
+                font-size: 12px;
+                padding: 6px 3px;
             }
             
-            .bet-number, .bet-amount, .bet-type {
+            .input-row {
+                gap: 4px;
+            }
+            
+            .num-btn, .unit-num-btn {
+                padding: 10px 2px;
+                font-size: 13px;
+                min-height: 40px;
+            }
+            
+            .action-special-btn, .unit-action-special-btn {
+                min-height: 86px;
+            }
+            
+            .additional-btn, .unit-additional-btn {
+                padding: 8px 2px;
+                font-size: 12px;
+                min-height: 35px;
+            }
+            
+            .cpt-btn, .unit-cpt-btn {
+                padding: 10px;
                 font-size: 14px;
             }
             
-            .column-headers {
-                font-size: 13px;
-                padding: 6px 8px;
+            .button-grid, .unit-button-grid {
+                gap: 4px;
             }
             
-            .user-select-section {
-                padding: 8px 10px;
-            }
-            
-            .user-select-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .user-label {
-                text-align: center;
-                margin-bottom: 5px;
+            .additional-buttons, .unit-additional-buttons {
+                gap: 4px;
             }
         }
         
-        .loading-users {
-            text-align: center;
-            padding: 10px;
-            color: #666;
-            font-style: italic;
+        @media (max-width: 360px) {
+            .text-display {
+                font-size: 15px;
+                padding: 5px 2px;
+            }
+            
+            .input-row {
+                gap: 3px;
+            }
+            
+            .num-btn, .unit-num-btn {
+                padding: 8px 1px;
+                font-size: 15px;
+                min-height: 50px;
+            }
+            
+            .action-special-btn, .unit-action-special-btn {
+                min-height: 76px;
+            }
         }
 
-        /* New styles for message display */
         .message-overlay {
             position: fixed;
             top: 0;
@@ -572,11 +730,140 @@
             <div id="slipnumber" class="slipnumber">0</div>
         </div>
         
-        <!-- Edit Text for Input -->
+        <!-- Edit View -->
         <div class="edit-view">
-            <textarea 
-                id="betInput" 
-                placeholder="ဥပမာ: 
+            <div class="cpt-container">
+                <button id="cptBtn" class="cpt-btn">Keyboard</button>
+                <button id="unitCptBtn" class="unit-cpt-btn">UnitKeyboard</button>
+            </div>
+            
+            <!-- Input Row for Standard Keyboard -->
+            <div id="inputRow" class="input-row" style="display: none;">
+                <div id="editTxt1" class="text-display">ဂဏန်း</div>
+                <div id="textView" class="text-display"></div>
+                <div id="editTxt2" class="text-display">ယူနစ်</div>
+                <div id="editTxt3" class="text-display"></div>
+            </div>
+            
+            <!-- Input Row for Unit Keyboard -->
+            <div id="unitInputRow" class="input-row" style="display: none;">
+                <div id="uniteditTxt1" class="text-display">ဂဏန်း</div>
+                <div id="unittextView" class="text-display"></div>
+                <div id="uniteditTxt2" class="text-display">ယူနစ်</div>
+                <div id="uniteditTxt3" class="text-display"></div>
+            </div>
+            
+            <!-- Keyboard Container for Standard Keyboard -->
+            <div id="buttonsScrollContainer" class="buttons-scroll-container">
+                <div class="button-grid">
+                    <button class="num-btn">1</button>
+                    <button class="num-btn">2</button>
+                    <button class="num-btn">3</button>
+                    <button class="num-btn special-btn">R</button>
+                    
+                    <button class="num-btn">4</button>
+                    <button class="num-btn">5</button>
+                    <button class="num-btn">6</button>
+                    <button class="num-btn special-btn">အပါ</button>
+                    
+                    <button class="num-btn">7</button>
+                    <button class="num-btn">8</button>
+                    <button class="num-btn">9</button>
+                    <button class="num-btn action-special-btn">OK</button>
+                    
+                    <button class="num-btn">00</button>
+                    <button class="num-btn">0</button>
+                    <button class="num-btn special-btn">DEL</button>
+                    <div style="visibility: hidden;"></div>
+                </div>
+                
+                <div class="additional-buttons">
+                    <button class="additional-btn">ထိပ်</button>
+                    <button class="additional-btn">ပိတ်</button>
+                    <button class="additional-btn">ဘရိတ်</button>
+                    <button class="additional-btn">အပူး</button>
+                    <button class="additional-btn">ပါဝါ</button>
+                    <button class="additional-btn">နက္ခ</button>
+                    <button class="additional-btn">အခွေ</button>
+                    <button class="additional-btn">ခွေပူး</button>
+                    <button class="additional-btn">K</button>
+                    <button class="additional-btn">ညီကို</button>
+                    <button class="additional-btn">ကိုညီ</button>
+                    <button class="additional-btn">ညီကိုR</button>
+                    <button class="additional-btn">စုံစုံ</button>
+                    <button class="additional-btn">မမ</button>
+                    <button class="additional-btn">စုံမ</button>
+                    <button class="additional-btn">မစုံ</button>
+                    <button class="additional-btn">စုံပူး</button>
+                    <button class="additional-btn">မပူး</button>
+                    <button class="additional-btn">စုံကပ်</button>
+                    <button class="additional-btn">မကပ်</button>
+                    <button class="additional-btn">စုံကပ်R</button>
+                   <button class="additional-btn">မကပ်R</button>
+                    <button class="additional-btn">ကပ်</button>
+ 
+                    <div style="visibility: hidden;"></div>
+                </div>
+            </div>
+            
+            <!-- Keyboard Container for Unit Keyboard -->
+            <div id="unitButtonsScrollContainer" class="unit-buttons-scroll-container">
+                <div class="unit-button-grid">
+                    <button class="unit-num-btn">1</button>
+                    <button class="unit-num-btn">2</button>
+                    <button class="unit-num-btn">3</button>
+                    <button class="unit-num-btn unit-special-btn">R</button>
+                    
+                    <button class="unit-num-btn">4</button>
+                    <button class="unit-num-btn">5</button>
+                    <button class="unit-num-btn">6</button>
+                    <button class="unit-num-btn unit-special-btn">အပါ</button>
+                    
+                    <button class="unit-num-btn">7</button>
+                    <button class="unit-num-btn">8</button>
+                    <button class="unit-num-btn">9</button>
+                    <button class="unit-num-btn unit-action-special-btn">OK</button>
+                    
+                    <button class="unit-num-btn">00</button>
+                    <button class="unit-num-btn">0</button>
+                    <button class="unit-num-btn unit-special-btn">DEL</button>
+                    <div style="visibility: hidden;"></div>
+                </div>
+                
+                <div class="unit-additional-buttons">
+                    <button class="unit-additional-btn">ထိပ်</button>
+                    <button class="unit-additional-btn">ပိတ်</button>
+                    <button class="unit-additional-btn">ဘရိတ်</button>
+                    <button class="unit-additional-btn">အပူး</button>
+                    <button class="unit-additional-btn">ပါဝါ</button>
+                    <button class="unit-additional-btn">နက္ခ</button>
+                    <button class="unit-additional-btn">အခွေ</button>
+                    <button class="unit-additional-btn">ခွေပူး</button>
+                    <button class="unit-additional-btn">K</button>
+                    <button class="unit-additional-btn">ညီကို</button>
+                    <button class="unit-additional-btn">ကိုညီ</button>
+                    <button class="unit-additional-btn">ညီကိုR</button>
+                    <button class="unit-additional-btn">စုံစုံ</button>
+                    <button class="unit-additional-btn">မမ</button>
+                    <button class="unit-additional-btn">စုံမ</button>
+                    <button class="unit-additional-btn">မစုံ</button>
+                    <button class="unit-additional-btn">စုံပူး</button>
+                    <button class="unit-additional-btn">မပူး</button>
+                    <button class="unit-additional-btn">စုံကပ်</button>
+                    <button class="unit-additional-btn">မကပ်</button>
+                    <button class="unit-additional-btn">စုံကပ်R</button>
+                   <button class="unit-additional-btn">မကပ်R</button>
+                    <button class="unit-additional-btn">ကပ်</button>
+ 
+                    <div style="visibility: hidden;"></div>
+                </div>
+            </div>
+            
+            <!-- Original Edit Area (for textarea view) -->
+            <div id="originalEditArea" class="original-edit-area">
+                <textarea 
+                    id="betInput" 
+                    placeholder="ဥပမာ: 
 12-1000
 12/34/56-1000 
 12r1000
@@ -593,14 +880,14 @@
 မမ1000
 1စုံ/1မ
 1စုံr/1မr"
-                rows="4"
-            ></textarea>
-            <div class="example-text">ဂဏန်းနှင့်ငွေကြေးကို မှန်ကန်စွာထည့်ပါ (အနည်းဆုံး ၁၀၀)</div>
-            <div class="button-group">
-                <button id="a1Btn" class="a1-btn">CL</button>
-                <button id="a2Btn" class="a2-btn">Paste</button>
-                <button id="a4Btn" class="a4-btn">Add1</button>
-                <button id="a3Btn" class="a3-btn">Add2</button>
+                    rows="4"
+                ></textarea>
+                <div class="button-group">
+                    <button id="a1Btn" class="a1-btn">CL</button>
+                    <button id="a2Btn" class="a2-btn">Paste</button>
+                    <button id="a4Btn" class="a4-btn">Add1</button>
+                    <button id="a3Btn" class="a3-btn">Add2</button>
+                </div>
             </div>
         </div>
     </div>
@@ -613,13 +900,124 @@
             <button id="messageCloseBtn" class="message-btn">OK</button>
         </div>
     </div>
-     <script src="su.js"></script>
 
-<script src="sale.js"></script>
+    <script>
+        console.log('sale.html - Initializing...');
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM fully loaded and parsed');
+            
+            const cptBtn = document.getElementById('cptBtn');
+            const unitCptBtn = document.getElementById('unitCptBtn');
+            const inputRow = document.getElementById('inputRow');
+            const unitInputRow = document.getElementById('unitInputRow');
+            const buttonsScrollContainer = document.getElementById('buttonsScrollContainer');
+            const unitButtonsScrollContainer = document.getElementById('unitButtonsScrollContainer');
+            const originalEditArea = document.getElementById('originalEditArea');
+            
+            console.log('Elements found:', {
+                cptBtn: !!cptBtn,
+                unitCptBtn: !!unitCptBtn,
+                inputRow: !!inputRow,
+                unitInputRow: !!unitInputRow,
+                buttonsScrollContainer: !!buttonsScrollContainer,
+                unitButtonsScrollContainer: !!unitButtonsScrollContainer,
+                originalEditArea: !!originalEditArea
+            });
+            
+            let currentView = 'textarea'; // 'textarea', 'keyboard', or 'unitkeyboard'
+            
+            // Event listeners for keyboard toggle buttons
+            cptBtn.addEventListener('click', function() {
+                console.log('Standard Keyboard button clicked');
+                if (currentView === 'keyboard') {
+                    // Switch back to textarea
+                    showTextView();
+                } else {
+                    // Show standard keyboard
+                    showKeyboardView();
+                }
+            });
+            
+            unitCptBtn.addEventListener('click', function() {
+                console.log('Unit Keyboard button clicked');
+                if (currentView === 'unitkeyboard') {
+                    // Switch back to textarea
+                    showTextView();
+                } else {
+                    // Show unit keyboard
+                    showUnitKeyboardView();
+                }
+            });
+            
+            function showTextView() {
+                console.log('Showing textarea view');
+                currentView = 'textarea';
+                
+                // Hide all keyboard views
+                inputRow.style.display = 'none';
+                unitInputRow.style.display = 'none';
+                buttonsScrollContainer.style.display = 'none';
+                unitButtonsScrollContainer.style.display = 'none';
+                
+                // Show textarea
+                originalEditArea.style.display = 'flex';
+                
+                // Update button texts
+                cptBtn.textContent = 'Keyboard';
+                unitCptBtn.textContent = 'UnitKeyboard';
+            }
+            
+            function showKeyboardView() {
+                console.log('Showing standard keyboard view');
+                currentView = 'keyboard';
+                
+                // Hide other views
+                unitInputRow.style.display = 'none';
+                unitButtonsScrollContainer.style.display = 'none';
+                originalEditArea.style.display = 'none';
+                
+                // Show standard keyboard
+                inputRow.style.display = 'flex';
+                buttonsScrollContainer.style.display = 'block';
+                
+                // Update button texts
+                cptBtn.textContent = 'CopyPaste';
+                unitCptBtn.textContent = 'UnitKeyboard';
+            }
+            
+            function showUnitKeyboardView() {
+                console.log('Showing unit keyboard view');
+                currentView = 'unitkeyboard';
+                
+                // Hide other views
+                inputRow.style.display = 'none';
+                buttonsScrollContainer.style.display = 'none';
+                originalEditArea.style.display = 'none';
+                
+                // Show unit keyboard
+                unitInputRow.style.display = 'flex';
+                unitButtonsScrollContainer.style.display = 'block';
+                
+                // Update button texts
+                cptBtn.textContent = 'Keyboard';
+                unitCptBtn.textContent = 'CopyPaste';
+            }
+            
+            // Initialize with textarea view
+            console.log('Initializing with textarea view');
+            showTextView();
+            
+            console.log('Initialization complete');
+        });
+    </script>
 
-<script src="a3.js"></script>
-<script src="a4.js"></script>
+    <script src="su.js"></script>
+    <script src="sale.js"></script>
+    <script src="a3.js"></script>
+    <script src="a4.js"></script>
+    <script src="keyboard.js"></script>
+    <script src="unitkeyboard.js"></script>
     <script src="check.js"></script>
-
 </body>
 </html>
